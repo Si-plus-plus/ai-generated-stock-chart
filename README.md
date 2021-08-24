@@ -2,6 +2,8 @@
 by import numpy as pd
 for AIC - Compfest 13
 
+https://ai-generated-stock-chart.herokuapp.com/
+
 ## Motivational Problem
 #### Stock Trading Simulator
 
