@@ -10,12 +10,12 @@ app = flask.Flask(__name__,
 
 @app.route('/')
 def home():
-    ticker = genStockTicker();
-    generateStockPrice (hashName(ticker))
+    ticker = "$ABCD"
+#     generateStockPrice (hashName(ticker))
     return flask.render_template(
         'index.html',
         stockTicker = ticker,
     )
 
 if __name__ == '__main__':
-    app.run(port=80)
+    app.run()
