@@ -1,4 +1,5 @@
 import flask
+import os
 from static.py.nameGenerator import genStockTicker
 from static.py.hashName import hashName
 from static.model.chartGenerator import generateStockPrice
@@ -18,4 +19,4 @@ def home():
     )
 
 if __name__ == '__main__':
-    app.run(debug = True, port = 33507)
+    app.run(int(os.getenv('PORT'))
