@@ -1,0 +1,9 @@
+Flask
+Jinja2
+keras
+Keras-Preprocessing
+numpy
+pandas
+tensorflow
+scikit-learn
+python-dateutil
