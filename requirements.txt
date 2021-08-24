@@ -1,6 +1,5 @@
-Flask
-Jinja2
+flask
 numpy
 pandas
-tensorflow
-scikit-learn
+tensorflow.keras
+sklearn.preprocessing
