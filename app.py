@@ -11,8 +11,8 @@ app = flask.Flask(__name__,
 
 @app.route('/')
 def home():
-    ticker = "$ABCD"
-#     generateStockPrice (hashName(ticker))
+    ticker = genStockTicker()
+    generateStockPrice (hashName(ticker))
     return flask.render_template(
         'index.html',
         stockTicker = ticker,
