@@ -1,0 +1,13 @@
+:root{
+--pseudo-sb-w: min(3vw, 5px);
+}
+
+::-webkit-scrollbar{
+    width: var(--pseudo-sb-w);
+}
+::-webkit-scrollbar-track{
+    background-color: #373e45;
+}
+::-webkit-scrollbar-thumb{
+    background: #697684;
+}
