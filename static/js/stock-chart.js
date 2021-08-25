@@ -27,7 +27,7 @@ var lastIndex = data.length - 1;
 var currentIndex = 0;
 var price_p;
 
-var today = new Date();
+var today = new Date("2021-08-24");
 var currentBusinessDay = { day: today.getMonth(), month: today.getDate(), year: today.getFullYear() };
 
 var currentBar = {
@@ -37,6 +37,10 @@ var currentBar = {
 	close: data_g[currentIndex].open,
 	time: currentBusinessDay,
 };
+
+function getDay (){
+	return currentIndex+1;
+}
 
 function getCurrentStatus (){
 	var stat = {
@@ -49,10 +53,6 @@ function getCurrentStatus (){
 		cur: price_p
 	}
 	return stat;
-}
-
-function getDate (){
-	return data_g[currentIndex].time;
 }
 
 function mergeTickToBar(price) {
@@ -82,6 +82,7 @@ function nextBusinessDay(time) {
 
 var canStillTick = 1;
 function endGame (){
+	// console.log("endgame")
 	finishGame();
 	canStillTick = 0;
 }
@@ -89,7 +90,6 @@ function endGame (){
 var nextIsPressed = 0;
 $("#next-day").click(function(){
 	if (canStillTick == 1){
-
 		nextIsPressed = 1;
 		currentBar = {
 			open: data_g[currentIndex].open,
@@ -102,6 +102,9 @@ $("#next-day").click(function(){
 
 		currentBusinessDay = nextBusinessDay(currentBusinessDay);
 		currentIndex++;
+		// console.log(data_g.length + " : " + currentIndex);
+		// console.log("O" + data_g[currentIndex].open);
+		// console.log("D" + data_g[currentIndex].time);
 		if (currentIndex >= data_g.length-1){
 			endGame();
 		}
@@ -114,6 +117,7 @@ $("#next-day").click(function(){
 				time: currentBusinessDay,
 			};
 		}
+		document.getElementById("day").innerHTML = "Day "+getDay()+" of 85";
 	}
 });
 

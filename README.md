@@ -1,16 +1,8 @@
 # ai-generated-stock-chart
-
 by import numpy as pd
-
 for AIC - Compfest 13
 
 https://ai-generated-stock-chart.herokuapp.com/
-
-video : https://www.youtube.com/watch?v=A4t8TfpoOLw
-
-video file : https://drive.google.com/drive/folders/1Bk_m-04ACsnHNJ9mtl9xq-KZFtWMQk4h?usp=sharing (the font maybe broken)
-
-<sub><sup>pls don't judge the code, did this in a rush (and it's my first time developing a webapp)</sup></sub>
 
 ## Motivational Problem
 #### Stock Trading Simulator

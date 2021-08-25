@@ -5,7 +5,7 @@ $(".action-button").click(function(){
     var price = getPrice();
 
     if (!isNaN(price)){
-        insertData (getDate(), side, lots, price, lots*price, "Matched");
+        insertData ("Day "+getDay(), side, lots, price, lots*price, "Matched");
 
         if (side == "buy"){
             portfolio['v_balance'] -= lots*price;
