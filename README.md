@@ -10,11 +10,11 @@ video : https://www.youtube.com/watch?v=A4t8TfpoOLw
 
 video file : https://drive.google.com/drive/folders/1Bk_m-04ACsnHNJ9mtl9xq-KZFtWMQk4h?usp=sharing (the font maybe broken)
 
-<sub><sup>pls don't judge the code  
+<sub><sup>pls don't judge the code</sup></sub>
   
-did this in a rush 
+<sub><sup>did this in a rush</sup></sub>
   
-(and never had any webdev exp before)</sup></sub>
+<sub><sup>(and never had any webdev exp before)</sup></sub>
 
 ## Motivational Problem
 #### Stock Trading Simulator
