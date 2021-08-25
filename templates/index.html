@@ -102,7 +102,7 @@
                                       <p>
                                           You have reached the maximum possible days!<br />
                                           This is due to the limitation of the current AI.<br />
-                                          Please head to "Current Version" section to read more about this.
+                                          Please head to "Chart Generator" section to read more about this.
                                           Reload the page to restart with a new chart.
                                       </p>
                                 </div>
@@ -288,7 +288,7 @@
                                         <table class="table borderless">
                                             <tr>
                                                 <th style="width: 50%">
-                                                    Asset
+                                                    Asset (Lot)
                                                 </th>
                                                 <th>
                                                 </th>
@@ -488,9 +488,6 @@
                             <p>
                                 The model consists of 3 LSTM cells with 120 neurons each. The model's input is a 60-dimensional vector, which contains 30 days of alternating Open and Close, as explained in the previous section. The model's output is a 60-dimensional vector from a Time-distributed Layer with a ReLU activation function to ensure no negative data. This 60-dimensional vector is the next generated value, which can be either Open or Close, alternatingly.
                             </p>
-                            <div  class="text-center mb-4">
-                                <img src="static/img/model.jpeg" alt="model" style="width:max(600px, 60vw)">
-                            </div>
                             <p>
                                 The model achieves an R-squared of 99.62% from the validation dataset. We consider this accuracy a success since the model is neither underfitting nor overfitting. The model is capable of producing new sequences that are convincing and quite similar to actual market behaviour. This can be achieved due to a quite large amount of training data, together with the hyper-parameter fine-tuning. Most importantly, my solution of combining Open and Close, which makes everything comes together as a solid and convincing chart. The model is quite efficient and capable of generating an OHLC sequence of length 100 in under 3 seconds using GPU computing. Note that this is a testing environment using Google Colab, while the actual environment in the server does not have GPU computing.
                             </p>
