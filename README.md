@@ -99,8 +99,9 @@ The price noise, which ticks every 0.5 seconds, is randomized using Gaussian Dis
 - tensorflow-cpu 2.6.0
 - sklearn 0.24.2
 
-Dataset from Stocknet Dataset by Yumoxu
-Layout heavily modified from Start Bootstrap SB Admin
-Price Chart modified from Realtime Emulation by yozeu6k1
-Counter Button modified from Buttons minus and plus in input by davidsantanacosta
-Gaussian Distribution randomizer from JavaScript Math.random Normal distribution (Gaussian bell curve)?
+Other Resources
+- Dataset from <a href="https://github.com/yumoxu/stocknet-dataset/tree/master/price/raw">Stocknet Dataset by Yumoxu</a><br>
+- Layout heavily modified from <a href="https://startbootstrap.com/template/sb-admin">Start Bootstrap SB Admin</a><br>
+- Price Chart modified from <a href="https://jsfiddle.net/TradingView/yozeu6k1/">Realtime Emulation by yozeu6k1</a><br>
+ - Counter Button modified from <a href="https://bootsnipp.com/snippets/dGWP">Buttons minus and plus in input by davidsantanacosta</a><br>
+- Gaussian Distribution randomizer from <a href="https://newbedev.com/javascript-math-random-normal-distribution-gaussian-bell-curve">JavaScript Math.random Normal distribution (Gaussian bell curve)?</a><br>
