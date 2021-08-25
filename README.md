@@ -6,7 +6,7 @@ https://ai-generated-stock-chart.herokuapp.com/
 
 Youtube video: https://www.youtube.com/watch?v=A4t8TfpoOLw
 
-<sup><sub> pls dont judge my code, i did it in a rush + i've only started learning webprog d-5 of AIC elimination round of AIC - Compfest 13 </sub></sup>
+<sup><sub> pls dont judge my code, i did it in a rush + i've only started learning webprog d-5 of the deadline of elimination round for AIC - Compfest 13 </sub></sup>
 
 ---
 
@@ -98,7 +98,7 @@ The price noise, which ticks every 0.5 seconds, is randomized using Gaussian Dis
 - pandas 1.3.2
 - tensorflow-cpu 2.6.0
 - sklearn 0.24.2
-- 
+
 Dataset from Stocknet Dataset by Yumoxu
 Layout heavily modified from Start Bootstrap SB Admin
 Price Chart modified from Realtime Emulation by yozeu6k1
