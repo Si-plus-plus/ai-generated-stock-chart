@@ -4,6 +4,8 @@ for AIC - Compfest 13
 
 Youtube video: https://www.youtube.com/watch?v=A4t8TfpoOLw
 
+<a href="https://ibb.co/WVQGs7r"><img src="https://i.ibb.co/kmp5MzL/screenshot.png" alt="screenshot" border="0"></a>
+
 https://ai-generated-stock-chart.herokuapp.com/
 
 The loading time may be long as it is generating a new chart on every reload. If the web app crashed, please wait for a while and reload the page
@@ -86,6 +88,8 @@ The model achieves an R-squared of 99.62% from the validation dataset. We consid
 #### Price Noise
 
 The price noise, which ticks every 0.5 seconds, is randomized using Gaussian Distribution. Gaussian Distribution often is used to represent distribution in any natural phenomenon, including prices bid by buyers and offered by sellers of the stock market.
+
+<a href="https://ibb.co/tmH6js4"><img src="https://i.ibb.co/smg4xw2/Distribution-for-Price-Noise-2.png" alt="Distribution-for-Price-Noise-2" border="0"></a>
 
 ---
 
