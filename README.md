@@ -84,6 +84,8 @@ The next and final pre-processing step is to prepare the dataset for the trainin
 
 The model consists of 3 LSTM cells with 120 neurons each. The model's input is a 60-dimensional vector, which contains 30 days of alternating Open and Close, as explained in the previous section. The model's output is a 60-dimensional vector from a Time-distributed Layer with a ReLU activation function to ensure no negative data. This 60-dimensional vector is the next generated value, which can be either Open or Close, alternatingly.
 
+<a href="https://ibb.co/4mS8XgP"><img src="https://i.ibb.co/tm2qvP8/model.jpg" alt="model" border="0"></a>
+
 The model achieves an R-squared of 99.62% from the validation dataset. We consider this accuracy a success since the model is neither underfitting nor overfitting. The model is capable of producing new sequences that are convincing and quite similar to actual market behaviour. This can be achieved due to a quite large amount of training data, together with the hyper-parameter fine-tuning. Most importantly, my solution of combining Open and Close, which makes everything comes together as a solid and convincing chart. The model is quite efficient and capable of generating an OHLC sequence of length 100 in under 3 seconds using GPU computing. Note that this is a testing environment using Google Colab, while the actual environment in the server does not have GPU computing.
 
 #### Price Noise
