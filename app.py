@@ -28,8 +28,8 @@ def home():
         # print ("submitted")
 
         ticker = genStockTicker()
-        # generateStockPrice (int(pre_chart),
-        #                     random.randint(0, 1e3))
+        generateStockPrice (int(pre_chart),
+                            random.randint(0, 1e3))
 
         return render_template(
             'index.html',
