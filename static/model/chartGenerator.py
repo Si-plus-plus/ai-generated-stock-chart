@@ -163,10 +163,10 @@ def generateOLHC(seed, length):  #seed = 0-198854, don't set length too big
     ret.append(tmp)
   return ret
 
-def generateStockPrice(seed):
+def generateStockPrice(days, seed):
     f = open (dir + "stock-chart-data.js", "w")
     gen = generateOLHC(seed, 100)
-    initial_chart, generated_chart = gen[30:45], gen[45:]
+    initial_chart, generated_chart = gen[30:(days+30)], gen[(days+30):]
 
     f.write("var stockChartData_i = [")
     start = True;

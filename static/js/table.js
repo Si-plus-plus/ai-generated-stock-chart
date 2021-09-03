@@ -8,7 +8,12 @@ function insertData (_date, _side, _lot_order, _price, _total, _status) {
     date.innerHTML = _date;
 
     var side = new_row.insertCell(1);
-    side.innerHTML = _side;
+    if (_side == "buy"){
+        side.innerHTML = "<mark style='background-color: #23a93aFF'>Buy</mark>";
+    }
+    else {
+        side.innerHTML = "<mark style='background-color: #dc3545FF'>Sell</mark>";
+    }
 
     var code = new_row.insertCell(2);
     code.innerHTML = ticker;
@@ -20,7 +25,7 @@ function insertData (_date, _side, _lot_order, _price, _total, _status) {
     price.innerHTML = toIDR(_price);
 
     var total = new_row.insertCell(5);
-    total.innerHTML = toIDR(_total*100);
+    total.innerHTML = toIDR(_total);
 
     var status = new_row.insertCell(6);
     status.innerHTML = _status;

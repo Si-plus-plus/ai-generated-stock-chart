@@ -8,8 +8,12 @@ Youtube video: https://www.youtube.com/watch?v=A4t8TfpoOLw
 
 https://ai-generated-stock-chart.herokuapp.com/
 
+<<<<<<< HEAD
 The loading time may be long as it is generating a new chart on every reload. If the web app crashed, please wait for a while and reload the page.
 If some of the text overflows, please zoom out. If the chart is not generating, please reload.
+=======
+The loading time may be long as it is generating a new chart on every reload. If the web app crashed, please wait for a while and reload the page
+>>>>>>> parent of 523a3cb (Update README.md)
 
 <sup><sub> pls dont judge my code, i did it in a rush + i've only started learning webprog d-5 of the deadline of elimination round for AIC - Compfest 13 </sub></sup>
 

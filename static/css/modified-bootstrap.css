@@ -11628,3 +11628,10 @@ body {
 [type='radio'] {
 display: none;
 }
+
+mark {
+  padding: 4px 8px 4px 8px;
+  color: White;
+  font-weight: 600;
+  border-radius: 25px;
+}

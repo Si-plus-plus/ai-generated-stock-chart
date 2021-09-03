@@ -66,323 +66,358 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div id="home-p" class="page">
-                            <div class="row mb-4 align-items-center">
-                                <div class="col-lg-11 col-sm-9">
-                                    <h1 class="mt-4 mb-4">Paper Trading Simulator</h1>
-
-                                    <!-- <h4 class="st">$STMJ</h4> -->
-                                </div>
-                                <div class="col-lg-1 col-sm-3">
-                                    <div class="btn-group w-100">
-                                        <button type="button" class="btn btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="reset_b">
-                                            Reset
-                                        </button>
-                                        <ul class= "card-body dropdown-menu">
-                                            <li>
-                                                <div class="card-text small mb-2" style="width:200px">
-                                                    Resetting the stock-chart will delete all of your previous transaction history and
-                                                    your balance will be reset to default.
-                                                    <br>
-                                                    Are you sure?
+                        {% if start == False %}
+                             <div class = "row mt-4 ">
+                                 <div class="col-lg-4 col-sm-12 mx-auto">
+                                     <div class="alert alert-danger mb-2" role="alert">
+                                         The generating process may take a while, but please do not spam.
+                                     </div>
+                                     <div class="alert alert-danger mb-2" role="alert">
+                                         If the page crashes or the stock chart does not load, please wait for a while and try again.
+                                     </div>
+                                     <div class="alert alert-warning mb-2" role="alert">
+                                         Reloading the page will discard your current session.
+                                     </div>
+                                    <div class = "card mt-4">
+                                        <div class = "p-3">
+                                            <div class = "row mb-2">
+                                                <div class = "col-9">
+                                                    Starting amount of candles for the chart
                                                 </div>
+                                                <div class = "col-3">
+                                                    <output for="days" id="slider_days" class = "float-end">
+                                                        {{ form.days.data }} Day(s)
+                                                    </output>
+                                                </div>
+                                            </div>
+
+                                            <form action="" method = "POST" class = "form-group" id = "slider">
+                                                <!-- {{ form.csrf_token }} -->
+                                                {{ form.days(min=0, max=50, oninput="outputUpdate(value)", class="form-range") }}
+                                                {{ form.submit(class="btn btn-primary float-end") }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-11 col-sm-9">
+                                        <h1 class="mt-4 mb-4">Paper Trading Simulator</h1>
+
+                                        <!-- <h4 class="st">$STMJ</h4> -->
+                                    </div>
+                                    <div class="col-lg-1 col-sm-3">
+                                        <div class="btn-group w-100">
+                                            <button type="button" class="btn btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="reset_b">
+                                                Reset
+                                            </button>
+                                            <ul class= "card-body dropdown-menu">
+                                                <li>
+                                                    <div class="card-text small mb-2" style="width:200px">
+                                                        Resetting the stock-chart will delete all of your previous transaction history and
+                                                        your balance will be reset to default.
+                                                        <br>
+                                                        Are you sure?
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <button class="btn btn-danger w-100" id="reset-button" href="index.html">
+                                                        Reset
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="alert alert-primary" role="alert" id="finished">
+                                          <h4 class="alert-heading">Well done!</h4>
+                                          <p>
+                                              You have reached the maximum possible days!<br />
+                                              This is due to the limitation of the current AI.<br />
+                                              Please head to "Chart Generator" section to read more about this.
+                                              Reload the page to restart with a new chart.
+                                          </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class='col-md-6'>
+                                                <!-- Day 1 -->
+                                                <h4 class="st">
+                                                    $STMJ
+                                                </h4>
+                                                <h6 id = "day" class = "text-secondary">
+                                                    Day 1
+                                                </h6>
+                                            </div>
+                                            <div class='col-md-6'>
+                                                <div class="card mb-2">
+                                                    <button type="button" id="next-day" class="btn btn-primary di">
+                                                        Proceed to the next day
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="card mb-4 ml-2" id = "chart-container">
+                                                <div id="stock-chart">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card mb-4 ">
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-success active bb">
+                                                    <input type="radio" class="action" id="buy-button" autocomplete="off" checked> Buy
+                                                </label>
+                                                <label class="btn btn-outline-danger sb">
+                                                    <input type="radio" class="action" id="sell-button" autocomplete="off"> Sell
+                                                </label>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="card-title">
+                                                    <br>
+                                                    <div class="row mb-1">
+                                                        <div class="col-lg-3 col-sm-12">
+                                                            Price
+                                                            <div class="small text-secondary">
+                                                                /share
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-9 col-sm-12">
+                                                            <div class="input-group">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default price-counter counter" id="price-minus" data-type="minus" data-field="price[1]">
+                                                                        <i class="fas fa-minus"></i>
+                                                                    </button>
+                                                                </span>
+                                                                <input type="text" name="price[1]" class="form-control input-number" id="p_field" value="550">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default price-counter counter" id="price-plus" data-type="plus" data-field="price[1]">
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                            <!-- <div id="current_price">
+                                                                Rp-
+                                                            </div> -->
+                                                        </div>
+                                                        <div class="row align-items-center mb-2">
+                                                            <div class="col-lg-4 col-sm-12">
+
+                                                            </div>
+                                                            <div class="col-lg-8 col-sm-12">
+                                                                <div class="small text-danger">
+                                                                    <p id="p_rng"></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row align-items-center mb-1">
+                                                        <div class="col-lg-3 col-sm-12">
+                                                            Amount
+                                                        </div>
+                                                        <div class="col-lg-7 col-sm-8">
+                                                            <div class="input-group">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default quantity-counter counter" id="quantity-minus" data-type="minus" data-field="quant[1]">
+                                                                        <i class="fas fa-minus"></i>
+                                                                    </button>
+                                                                </span>
+                                                                <input type="text" name="quant[1]" class="form-control input-number" id="q_field">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default quantity-counter counter" id="quantity-plus" data-type="plus" data-field="quant[1]">
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-4">
+                                                            Lots
+                                                        </div>
+                                                        <div class="row align-items-center mb-1">
+                                                            <div class="col-lg-4 col-sm-12">
+
+                                                            </div>
+                                                            <div class="col-lg-8 col-sm-12">
+                                                                <div class="small text-danger text-left">
+                                                                    <p id="q_rng"></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-4">
+                                                        <div class="col-lg-4 col-sm-12">
+                                                            <div class="small">
+                                                                total
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-8 col-sm-12">
+                                                            <div class="small">
+                                                                = price x lots x 100
+                                                                <br>
+                                                                <p id = "expected-sum">
+                                                                    = Rp550.000
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid gap-2 col-6 mb-6 mx-auto">
+                                                        <button class="btn btn-outline-success buy-details action-button di" id = "buy">
+                                                            Buy
+                                                        </button>
+                                                        <button class="btn btn-outline-danger sell-details action-button di" id = "sell">
+                                                            Sell
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                Portfolio
+                                            </div>
+                                            <div class="card-body" >
+                                                <table class="table borderless">
+                                                <tr>
+                                                    <td style="width: 50%">
+                                                        Initial Balance
+                                                    </td>
+                                                    <td id = "ib">
+                                                        //JS
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td >
+                                                        Virtual Balance
+                                                    </td>
+                                                    <td id = "vb">
+                                                        //JS
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Floating P&L
+                                                    </td>
+                                                    <td  id = "vpl">
+                                                        //JS
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Gain
+                                                    </td>
+                                                    <td id = "g">
+                                                        //JS
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table class="table borderless">
+                                                <tr>
+                                                    <th style="width: 50%">
+                                                        Asset (Lot)
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td class = "st">
+                                                    </td>
+                                                    <td id = "cs">
+                                                        //JS
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Asset value
+                                                    </td>
+                                                    <td id = "av">
+                                                        //JS
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Avg Price
+                                                    </td>
+                                                    <td id = "ap">
+                                                        //JS
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!-- <div class="row mb-4">
+                                <div class="col-lg-6">
+                                    <div class="small text-secondary">
+                                        Given history of previous day's data
+                                        prices and today's open price, try to
+                                        place bids as if it is the real market.
+
+                                        All orders will be matched after you
+                                        proceed to the next day. The matching
+                                        process will be based on probability
+                                        according to Bellman Curve.
+
+                                        <ul>
+                                            <li>
+                                                The higher-priced you bid,
+                                                the higher the chance it will be
+                                                matched by a virtual seller.
                                             </li>
                                             <li>
-                                                <button class="btn btn-danger w-100" id="reset-button" href="index.html">
-                                                    Reset
-                                                </button>
+                                                The lower-priced you bid,
+                                                the higher the chance it will be
+                                                matched by a virtual buyer.
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="alert alert-primary" role="alert" id="finished">
-                                      <h4 class="alert-heading">Well done!</h4>
-                                      <p>
-                                          You have reached the maximum possible days!<br />
-                                          This is due to the limitation of the current AI.<br />
-                                          Please head to "Chart Generator" section to read more about this.
-                                          Reload the page to restart with a new chart.
-                                      </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="row">
-                                        <div class='col-md-6'>
-                                            <!-- Day 1 -->
-                                            <h4 class="st">
-                                                $STMJ
-                                            </h4>
-                                            <h6 id = "day" class = "text-secondary">
-                                                Day 1
-                                            </h6>
-                                        </div>
-                                        <div class='col-md-6'>
-                                            <div class="card mb-2">
-                                                <button type="button" id="next-day" class="btn btn-primary di">
-                                                    Proceed to the next day
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="card mb-4" id = "chart-container">
-                                            <div id="stock-chart">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-lg-3">
-                                    <div class="card mb-4 ">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-success active bb">
-                                                <input type="radio" class="action" id="buy-button" autocomplete="off" checked> Buy
-                                            </label>
-                                            <label class="btn btn-outline-danger sb">
-                                                <input type="radio" class="action" id="sell-button" autocomplete="off"> Sell
-                                            </label>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="card-title">
-                                                <br>
-                                                <div class="row mb-1">
-                                                    <div class="col-lg-3 col-sm-12">
-                                                        Price
-                                                        <div class="small text-secondary">
-                                                            /share
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-9 col-sm-12">
-                                                        <!-- <div class="input-group">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-default price-counter" id="price-minus" data-type="minus" data-field="price[1]">
-                                                                    <i class="fas fa-minus"></i>
-                                                                </button>
-                                                            </span>
-                                                            <input type="text" name="price[1]" class="form-control input-number" id="p_field" value="550">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-default price-counter" id="price-plus" data-type="plus" data-field="price[1]">
-                                                                    <i class="fas fa-plus"></i>
-                                                                </button>
-                                                            </span>
-                                                        </div> -->
-                                                        <div id="current_price">
-                                                            Rp-
-                                                        </div>
-                                                    </div>
-                                                    <div class="row align-items-center mb-2">
-                                                        <!-- <div class="col-lg-4 col-sm-12">
-
-                                                        </div>
-                                                        <div class="col-lg-8 col-sm-12">
-                                                            <div class="small text-danger">
-                                                                <p id="p_rng">x</p>
-                                                            </div>
-                                                        </div> -->
-                                                    </div>
-
-                                                </div>
-                                                <div class="row align-items-center mb-1">
-                                                    <div class="col-lg-3 col-sm-12">
-                                                        Amount
-                                                    </div>
-                                                    <div class="col-lg-7 col-sm-8">
-                                                        <div class="input-group">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-default quantity-counter" id="quantity-minus" data-type="minus" data-field="quant[1]">
-                                                                    <i class="fas fa-minus"></i>
-                                                                </button>
-                                                            </span>
-                                                            <input type="text" name="quant[1]" class="form-control input-number" id="q_field">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-default quantity-counter" id="quantity-plus" data-type="plus" data-field="quant[1]">
-                                                                    <i class="fas fa-plus"></i>
-                                                                </button>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-2 col-sm-4">
-                                                        Lots
-                                                    </div>
-                                                    <div class="row align-items-center mb-1">
-                                                        <div class="col-lg-4 col-sm-12">
-
-                                                        </div>
-                                                        <div class="col-lg-8 col-sm-12">
-                                                            <div class="small text-danger text-left">
-                                                                <p id="q_rng">x</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4">
-                                                    <div class="col-lg-4 col-sm-12">
-                                                        <div class="small">
-                                                            total
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-8 col-sm-12">
-                                                        <div class="small">
-                                                            = price x lots x 100
-                                                            <br>
-                                                            <p id = "expected-sum">
-                                                                = Rp550.000
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-grid gap-2 col-6 mb-6 mx-auto">
-                                                    <button class="btn btn-outline-success buy-details action-button di" id = "buy">
-                                                        Buy
-                                                    </button>
-                                                    <button class="btn btn-outline-danger sell-details action-button di" id = "sell">
-                                                        Sell
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="card-text small text-secondary">
+                                        <ul>
+                                            <li>
+                                                The minimum price you can bid is -7% of the previous day's closing price (Auto Reject Bawah).
+                                            </li>
+                                            <li>
+                                                The maximum price you can bid is +25% of the previous day's closing price (Auto Reject Atas).
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="card mb-4">
-                                        <div class="card-header">
-                                            Portfolio
-                                        </div>
-                                        <div class="card-body" >
-                                            <table class="table borderless">
-                                            <tr>
-                                                <td style="width: 50%">
-                                                    Initial Balance
-                                                </td>
-                                                <td id = "ib">
-                                                    //JS
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td >
-                                                    Virtual Balance
-                                                </td>
-                                                <td id = "vb">
-                                                    //JS
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Floating P&L
-                                                </td>
-                                                <td  id = "vpl">
-                                                    //JS
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Gain
-                                                </td>
-                                                <td id = "g">
-                                                    //JS
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <table class="table borderless">
-                                            <tr>
-                                                <th style="width: 50%">
-                                                    Asset (Lot)
-                                                </th>
-                                                <th>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    {{ stockTicker }}
-                                                </td>
-                                                <td id = "cs">
-                                                    //JS
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Asset value
-                                                </td>
-                                                <td id = "av">
-                                                    //JS
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Avg Price
-                                                </td>
-                                                <td id = "ap">
-                                                    //JS
-                                                </td>
-                                            </tr>
+                            </div> -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        Order History
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="orders-history" class="table borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th>Time</th>
+                                                    <th>Side</th>
+                                                    <th>Code</th>
+                                                    <th>Lots</th>
+                                                    <th>Price</th>
+                                                    <th>Total</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                            <!-- <div class="row mb-4">
-                            <div class="col-lg-6">
-                                <div class="small text-secondary">
-                                    Given history of previous day's data
-                                    prices and today's open price, try to
-                                    place bids as if it is the real market.
-
-                                    All orders will be matched after you
-                                    proceed to the next day. The matching
-                                    process will be based on probability
-                                    according to Bellman Curve.
-
-                                    <ul>
-                                        <li>
-                                            The higher-priced you bid,
-                                            the higher the chance it will be
-                                            matched by a virtual seller.
-                                        </li>
-                                        <li>
-                                            The lower-priced you bid,
-                                            the higher the chance it will be
-                                            matched by a virtual buyer.
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="card-text small text-secondary">
-                                    <ul>
-                                        <li>
-                                            The minimum price you can bid is -7% of the previous day's closing price (Auto Reject Bawah).
-                                        </li>
-                                        <li>
-                                            The maximum price you can bid is +25% of the previous day's closing price (Auto Reject Atas).
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div> -->
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    Order History
-                                </div>
-                                <div class="card-body">
-                                    <table id="orders-history" class="table borderless">
-                                        <thead>
-                                            <tr>
-                                                <th>Time</th>
-                                                <th>Side</th>
-                                                <th>Code</th>
-                                                <th>Lots</th>
-                                                <th>Price</th>
-                                                <th>Total</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        {% endif %}
                         </div>
                         <div id="motivational-problem-p" class="page">
                             <h1 class="mt-4 mb-4">Motivational Problem</h1>
@@ -547,27 +582,46 @@
         </div>
         <div id="bin">
             <div id = "new-stock-ticker">
-                {{ stockTicker }}
+                {{ stock_ticker }}
+            </div>
+            <div id = "starting-days">
+                {{ starting_days }}
             </div>
         </div>
 
-        <script src="static/js/interval.js"></script>
-        <script src="static/js/hide-bin.js"></script>
-        <script src="static/js/set-ticker.js"></script>
-        <script src="static/js/number-formatter.js"></script>
-        <script src="static/js/probability.js"></script>
-        <script src="static/js/action-tab-button.js"></script>
+        <script src="static/js/slider.js"></script>
+
+        <script src="static/js/database.js"></script>
         <script src="static/model/stock-chart-data.js"></script>
-        <script src="static/js/finished.js"></script>
-        <script src="static/js/stock-chart.js"></script>
-        <script src="static/js/portfolio.js"></script>
-        <!-- <script src="static/js/counter.js"></script> -->
-        <script src="static/js/counter-q-only.js"></script>
+
         <script src="static/js/dropdown-new-game.js"></script>
         <script src="static/js/reload-page.js"></script>
         <script src="static/js/sidebar.js"></script>
+        <script src="static/js/page.js"></script>
+        <script src="static/js/action-tab-button.js"></script>
+
+        {% if start %}
+        <script src="static/js/set-day.js"></script>
+        <script src="static/js/set-ticker.js"></script>
+        <script src="static/js/probability.js"></script>
+        <script src="static/js/number-formatter.js"></script>
+        <script src="static/js/portfolio.js"></script>
+
+        <script src="static/js/finished.js"></script>
+
+        <!-- V -->
+        <script src="static/js/counter-rev.js"></script>
+
+        <script src="static/js/stock-chart.js"></script>
+        <script src="static/js/stock-chart-functions.js"></script>
+        {% endif %}
+
+        <script src="static/js/sess.js"></script>
+        <!-- need fixing -->
+        <!-- <script src="static/js/counter.js"></script>
+        <script src="static/js/counter-q-only.js"></script> -->
         <script src="static/js/action.js"></script>
         <script src="static/js/table.js"></script>
-        <script src="static/js/page.js"></script>
+
     </body>
 </html>
