@@ -1,7 +1,19 @@
+function success (side, lots, price) {
+    if (side == "buy"){
+        portfolio['v_balance'] -= lots*price;
+        portfolio['c_stock'] += lots;
+        portfolio['v_stock'] += lots*price;
+    }
+    else {
+        portfolio['v_balance'] += lots*price;
+        portfolio['c_stock'] -= lots;
+        portfolio['v_stock'] = portfolio['v_stock']*portfolio['c_stock']/(portfolio['c_stock']+lots);
+    }
+}
+
 function cal_avg(){
     if (portfolio.c_stock == 0) return 0;
     var temp = portfolio.v_stock/portfolio.c_stock;
-    console.log(portfolio.v_stock + "/" + portfolio.c_stock +"=" + temp);
     return temp;
 }
 
@@ -33,9 +45,12 @@ function floating_pl(){
 setInterval(function() {
     document.getElementById("ib").innerHTML = toIDR(portfolio.i_balance);
     document.getElementById("vb").innerHTML = toIDR(portfolio.v_balance);
+    document.getElementById("ab").innerHTML = toIDR(portfolio.v_balance-portfolio.on_hold_balance);
+    document.getElementById("pb").innerHTML = toIDR(portfolio.on_hold_balance);
     document.getElementById("vpl").innerHTML = toIDR(floating_pl());
     document.getElementById("g").innerHTML = cal_gain();
     document.getElementById("cs").innerHTML = portfolio.c_stock + " Lots";
+    document.getElementById("ps").innerHTML = portfolio.on_hold_stock + " Lots";
     document.getElementById("av").innerHTML = toIDR(portfolio.c_stock*100*current_price);
     document.getElementById("ap").innerHTML = toIDR(Math.round(cal_avg()));
 }, refresh_rate);

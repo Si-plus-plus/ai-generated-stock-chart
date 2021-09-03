@@ -81,7 +81,7 @@ $("#next-day").click(function(){
 				time: currentBusinessDay,
 			};
 		}
-
+		EOD();
 		updateDay ();
 		updateInterval ();
 		recalc();

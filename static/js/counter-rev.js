@@ -15,6 +15,9 @@ function recalc(){
     t_price.lo = prev_price-(Math.floor((prev_price-Math.ceil(prev_price*0.93))/interval_chg)*interval_chg);
     t_price.hi = prev_price+(Math.floor((Math.floor(prev_price*1.25)-prev_price)/interval_chg)*interval_chg);
 
+    limit.low = t_price.lo;
+    limit.high = t_price.hi;
+
     t_quant.now = 1;
 
     $("input[name='"+"quant[1]"+"']").val(t_quant.now).change();
@@ -23,7 +26,7 @@ function recalc(){
 recalc();
 updateInterval();
 
-function removeNonDigit (name, sname, lname, min, max, now, itvl){
+function removeNonDigit (name, sname, lname, min, max, now, interval_chg){
     var input = $("input[name='"+name+"']");
     var i_now = parseInt(input.val());
     var i_now_p = Number(input.val());
@@ -36,7 +39,7 @@ function removeNonDigit (name, sname, lname, min, max, now, itvl){
         if (sname == "q") t_quant.now = min;
         else t_price.now = min;
 
-        if (min + itvl > max){
+        if (min + interval_chg > max){
             $("#"+lname+"-plus").attr('disabled', true);
             $("#"+lname+"-plus").css("color","#9c9c9c");
         }
@@ -56,7 +59,7 @@ function removeNonDigit (name, sname, lname, min, max, now, itvl){
         if (sname == "q") t_quant.now = max;
         else t_price.now = max;
 
-        if (max - itvl < min){
+        if (max - interval_chg < min){
             $("#"+lname+"-minus").attr('disabled', true);
             $("#"+lname+"-minus").css("color","#9c9c9c");
         }
@@ -94,8 +97,10 @@ setInterval(function() {
     document.getElementById("expected-sum").innerHTML = "=" + toIDR(t_quant.now * t_price.now * 100);
 
     if (_side == "buy"){
-        t_quant.hi = Math.floor(portfolio.v_balance/(t_price.now*100));
-        if (portfolio.v_balance < t_price.now*100){
+        console.log("on hold = " + portfolio.on_hold_balance);
+        t_quant.hi = Math.floor((portfolio.v_balance-portfolio.on_hold_balance)/(t_price.now*100));
+        // console.log (t_quant.hi);
+        if (portfolio.v_balance-portfolio.on_hold_balance < t_price.now*100){
             $("#"+_side).addClass ("disabled");
         }
         else {
@@ -103,8 +108,8 @@ setInterval(function() {
         }
     }
     else {
-        t_quant.hi = portfolio.c_stock;
-        if (portfolio.c_stock < 1){
+        t_quant.hi = (portfolio.c_stock-portfolio.on_hold_stock);
+        if (portfolio.c_stock-portfolio.on_hold_stock < 1){
             $("#"+_side).addClass ("disabled");
         }
         else {
@@ -127,8 +132,8 @@ $("#p_field").focus(function(){
 });
 
 $("#p_field").blur(function(){
-    $("#"+_side).removeClass ("disabled");
     removeNonDigit ("price[1]", "p", "price", t_price.lo, t_price.hi, t_price.now, interval_chg);
+    $("#"+_side).removeClass ("disabled");
 });
 
 

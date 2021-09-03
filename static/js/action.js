@@ -5,19 +5,22 @@ $(".action-button").click(function(){
     var price = t_price.now;
 
     if (!isNaN(price)){
-        insertData ("Day "+ (day), side, lots, price, lots*price*100, "Matched");
+        var status = "Pending"
         transaction_count += 1;
 
-        if (side == "buy"){
-            portfolio['v_balance'] -= lots*price;
-            portfolio['c_stock'] += lots;
-            portfolio['v_stock'] += lots*price;
+        if (match_probability(side, price)){
+            status = "Matched";
+            success(side, lots, price);
         }
         else {
-            portfolio['v_balance'] += lots*price;
-            portfolio['c_stock'] -= lots;
-            portfolio['v_stock'] = portfolio['v_stock']*portfolio['c_stock']/(portfolio['c_stock']+lots);
+            if (side == "buy"){
+                portfolio.on_hold_balance += lots*price*100;
+            }
+            else {
+                portfolio.on_hold_stock += lots;
+            }
         }
 
+        insertData ("Day "+ (day), side, lots, price, lots*price*100, status);
     }
 })

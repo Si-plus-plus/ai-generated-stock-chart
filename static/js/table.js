@@ -1,9 +1,9 @@
 var transaction_id = 0;
 
 function insertData (_date, _side, _lot_order, _price, _total, _status) {
-    var table = document.getElementById("orders-history");
+    var _table = document.getElementById("orders-history");
 
-    var new_row = table.insertRow (1);
+    var new_row = _table.insertRow (1);
     var date = new_row.insertCell(0);
     date.innerHTML = _date;
 

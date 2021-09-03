@@ -4,7 +4,10 @@ var portfolio = {
     gain: 0,
 
     v_stock: 0,
-    c_stock: 0
+    c_stock: 0,
+
+    on_hold_stock: 0,
+    on_hold_balance: 0
 }
 portfolio.v_balance = portfolio.i_balance;
 
@@ -15,6 +18,12 @@ var current_bar = {
 	close: 0,
 	time: 0
 };
+
+var limit = {
+    low: 0,
+    high: 0
+}
+
 var current_price = 0;
 var prev_price = 0;
 

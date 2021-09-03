@@ -1,3 +1,5 @@
 function outputUpdate(days) {
-    document.querySelector('#slider_days').innerHTML = days+" Day(s)";
+    if (notGenerated){
+        document.querySelector('#slider_days').innerHTML = days+" Day(s)";
+    }
 }
