@@ -1,4 +1,6 @@
 flask
+flask_wtf
+wtforms
 numpy
 pandas
 tensorflow-cpu
