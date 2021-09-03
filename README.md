@@ -4,8 +4,6 @@ for AIC - Compfest 13
 
 Youtube video: https://www.youtube.com/watch?v=A4t8TfpoOLw
 
-<a href="https://ibb.co/WVQGs7r"><img src="https://i.ibb.co/kmp5MzL/screenshot.png" alt="screenshot" border="0"></a>
-
 https://ai-generated-stock-chart.herokuapp.com/
 
 <<<<<<< HEAD
