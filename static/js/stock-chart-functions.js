@@ -58,8 +58,8 @@ $("#next-day").click(function(){
 		nextIsPressed = 1;
 		current_bar = {
 			open: data_g[current_index].open,
-			high: data_g[current_index].high,
-			low: data_g[current_index].low,
+			high: Math.max(data_g[current_index].high, current_bar.high),
+			low: Math.min(data_g[current_index].low, current_bar.low),
 			close: data_g[current_index].close,
 			time: currentBusinessDay,
 		};

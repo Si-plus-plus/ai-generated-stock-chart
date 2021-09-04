@@ -1,5 +1,5 @@
 function EOD () {
-    console.log("EOD");
+    // console.log("EOD");
     var history = document.getElementById("orders-history");
     var history_length = history.rows.length;
     for (var r = 1; r < history_length; r++) {

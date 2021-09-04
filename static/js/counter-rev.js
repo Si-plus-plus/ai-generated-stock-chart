@@ -97,7 +97,7 @@ setInterval(function() {
     document.getElementById("expected-sum").innerHTML = "=" + toIDR(t_quant.now * t_price.now * 100);
 
     if (_side == "buy"){
-        console.log("on hold = " + portfolio.on_hold_balance);
+        // console.log("on hold = " + portfolio.on_hold_balance);
         t_quant.hi = Math.floor((portfolio.v_balance-portfolio.on_hold_balance)/(t_price.now*100));
         // console.log (t_quant.hi);
         if (portfolio.v_balance-portfolio.on_hold_balance < t_price.now*100){

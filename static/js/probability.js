@@ -28,16 +28,19 @@ function match_probability(status, price, open){
 
     n_price = normalized(price, limit.low, limit.high);
     n_open = normalized(open, limit.low, limit.high);
-
     offset = 0.2
+
+    if (status === "sell") {
+        n_price = 1 - n_price;
+        n_open = 1 - n_open
+    }
+
     multiplier = 10
     n_price = (n_price - n_open + offset) * multiplier
 
     p_price = sigmoid(n_price);
 
-    if (status === "sell") {
-        p_price = 1 - p_price;
-    }
+
     // console.log(p_price)
     return (Math.random() < p_price);
 }

@@ -11,6 +11,9 @@ $(".action-button").click(function(){
         if (match_probability(side, price, current_bar['open'])){
             status = "Matched";
             success(side, lots, price);
+
+            current_bar.high = Math.max (current_bar.high, price);
+            current_bar.low = Math.max (current_bar.low, price);
         }
         else {
             if (side == "buy"){

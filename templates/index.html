@@ -519,6 +519,7 @@
                             <p>
                                 In the Sliding-Window approach, a given window is used to generate the next window. Then, the next window can be used to generate the next window again, which makes it has that ‘sliding’ movement. In the current version of this website, the window size is 30, which is the historical data as the seed. Starting from the given seed, the model generates a sequence of length 100 before hitting the Exploding/Vanishing Gradient. This sequence is what the candlestick chart shows in the simulator.
                             </p>
+                            <img src="static/img/model.jpeg" alt="AI model visualization" style="width:60vw" class="p-4">
                             <hr>
                             <h2>
                                 Generation Algorithm
@@ -533,7 +534,33 @@
                                 Furthermore, we hard-coded such a rule to the generation algorithm to give the restriction of “93% to 125% of the previous day’s price”. If the model decided to generate numbers outside the boundary, then it will be set to 93% if it is lower or 125% if it is higher. This modification implies that it follows the current <a href="https://bigalpha.id/news/apa-itu-ara-dan-arb-saham">government regulation</a> and avoids the Exploding/Vanishing Gradient problem. Since the changes are capped, it is harder for the sequence to converge to either 0 or infinity. Instead, the model will generate a repeating sequence after generating 100 elements. Since this repeating sequence does not resemble actual market behaviour, I decided to generate only 100 elements, despite avoiding the Exploding/Vanishing Gradient.
                             </p>
                             <p>
-                                For the Low and High, I can simply set the value to 93% and 125% of yesterday’s price, respectively. However, the behaviour of an actual market is not a hard-coded constant either. My solution is to generate a random value between 93% and 125% of yesterday’s price, such that the Low is smaller than the High, while both Open and Close are still in between the value of Low and High. After experimenting with many generations, the randomized Low and High is quite convincing since the range is pre-determined by a reasonable Open and Close value. Moreover, it also reduces the amount of computation for the generation, making it more efficient to generate charts.
+                                For the Low and High, I can simply set the value to 93% and 125% of the yesterday’s price, respectively. However, the behaviour of an actual market is not a hard-coded constant either. My solution is to generate a random value between 93% and 125% of the yesterday’s price, such that the Low is smaller than the High, while both Open and Close still in between the value of Low and High. The reason why they are not AI-generated is because the value might change from user’s transaction. If the user make a transaction with lower price than the AI-generated, then the Low value of that day is also updated. Thus, AI-generated data in this context does not improve anything, and  it only increase the computation time.
+                            </p>
+                            <hr>
+                            <h2>
+                                Transactional Algorithm
+                            </h2>
+                            <p>
+                                To replicate market behaviour, since there is no context, assume that the success of a transaction is based on probabilistic function. There are several constraints:
+                                <ul>
+                                    <li>
+                                        Lower buy price/higher sell price tends to higher chance of success
+                                    </li>
+                                    <li>
+                                        Higher buy price/lower sell price tends to lower chance of success
+                                    </li>
+                                    <li>
+                                        Transaction with open price tends to be successful
+                                    </li>
+                                    <li>
+                                        Probabilistic function is continuous and differentiable from ARB to ARA
+                                    </li>
+                                </ul>
+                                One function that fits all of the given constraints are a bounded normalized sigmoid. In order to satisfy the third constraint, an offset can be introduced to the function. An example can be seen in the following illustration. The x-axis is the price normalized to between 0 (ARB) and 1 (ARA), and y-axis is the probability. In the example, the Open price is at x=0.4, which will return ~88% chance of transaction to be success. Other than that, the probability will follow the sigmoid function, which are bounded from x=0 to 1. Then the probability is normalized as well from 0 to 1.
+                            </p>
+                            <img src="static/img/normalizedSigmoid.png" alt="Sigmoid probability for transactions" style="width:max(360px, 30vw)">
+                            <p>
+                                In conclusion, to generate such distribution function, it requires 3 parameters: ARB, ARA, and today’s Open price. All three of them are easily obtainable from the generated data.
                             </p>
                             <hr>
                             <h2>
@@ -567,7 +594,7 @@
                             </p>
                             <img src="static/img/normalDistribution.png" alt="Normal distribution for price noise" style="width:max(480px, 40vw)">
                             <p>
-                                The chart above is generated from <a href = "https://jsfiddle.net/2uc346hp/">JSFiddle file by Torstein Hensi</a>.
+                                The chart above is generated using <a href = "https://jsfiddle.net/2uc346hp/">JSFiddle file by Torstein Hensi</a>.
                             </p>
                         </div>
                         <div id="resources-p" class="page">
@@ -616,6 +643,56 @@
                         </div>
                         <div id="log-p" class="page">
                             <h1 class="mt-4 mb-4">Change Log</h1>
+                            <h2 class = "pb-2">
+                                Elimination round version
+                            </h2>
+                            <img src="static/img/screenshotElim.png" alt="EliminationSS" style="width:max(480px, 40vw)" class = "pb-4">
+                            <h2>
+                                Final round version
+                            </h2 class = "pb-2">
+                            <img src="static/img/screenshotFin.png" alt="FinSS" style="width:max(480px, 40vw)" class = "pb-4">
+
+                            <ul class = "pb-4">
+                                <li>
+                                    Added the ability to set the price for offer and bids
+                                </li>
+                                <li>
+                                    Added transaction matching algorithm using Normalized Sigmoid
+                                </li>
+                                <li>
+                                    Make orders more variative; Changed transcaction status from {Matched} to {Matched, Pending, Unfulfilled}
+                                </li>
+                                <li>
+                                    Added starting candles option. The elimination version has a fixed 30 starting candles
+                                </li>
+                                <li>
+                                    Added warning messages before the algorithm generate the chart to warn users of the heavy generation process
+                                </li>
+                                <li>
+                                    Optimized the Back-End to avoid request time out
+                                </li>
+                                <li>
+                                    Added Changelog
+                                </li>
+                                <li>
+                                    Added simple explanation about the AI under the stock chart
+                                </li>
+                                <li>
+                                    Added AI model visualization
+                                </li>
+                                <li>
+                                    Added highlight colors on Buy/Sell on orders history
+                                </li>
+                                <li>
+                                    Changed textbox (on buy/sell action card) to check the validity of the user input from every x seconds to after the textbox is blurred,
+                                </li>
+                                <li>
+                                    Fix bugs
+                                </li>
+                            </ul>
+                            <p class = "small">
+                                All updates are made (and thought) during improvement phase.
+                            </p>
                         </div>
                     </div>
                 </main>
