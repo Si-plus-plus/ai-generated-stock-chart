@@ -141,6 +141,12 @@ def generateOLHC(seed, length):  #seed = 0-198854, don't set length too big
   generated_op, generated_cl = generateOpenClose(model, input_data, length, mms)
   generated_op = np.multiply(generated_op, 50/7.27)
   generated_cl = np.multiply(generated_cl, 50/7.27)
+
+  max_opcl = max(np.max(generated_op), np.max(generated_cl))
+  if max_opcl > 1e6:
+      generated_op = np.divide(generated_op, 1000)
+      generated_cl = np.divide(generated_cl, 1000)
+
   generated_lo, generated_hi = generateLowHigh(generated_op, generated_cl)
   generated_dt = generateDate(length)
 
