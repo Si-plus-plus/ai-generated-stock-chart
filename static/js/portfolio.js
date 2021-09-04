@@ -53,4 +53,4 @@ setInterval(function() {
     document.getElementById("ps").innerHTML = portfolio.on_hold_stock + " Lots";
     document.getElementById("av").innerHTML = toIDR(portfolio.c_stock*100*current_price);
     document.getElementById("ap").innerHTML = toIDR(Math.round(cal_avg()));
-}, refresh_rate);
+}, 100);

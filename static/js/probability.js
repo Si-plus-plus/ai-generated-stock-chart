@@ -23,18 +23,21 @@ function normalized(x, l, r){
         return (x - l) / (r - l);
 }
 
-function match_probability(status, price){
+function match_probability(status, price, open){
     if (price > limit.high || price < limit.low) return false;
 
     n_price = normalized(price, limit.low, limit.high);
-    n_price = n_price * 10 - 5;
+    n_open = normalized(open, limit.low, limit.high);
 
-    p_low = sigmoid(-1);
-    p_high = sigmoid(1);
-    p_price = normalized(sigmoid(n_price), p_low, p_high);
+    offset = 0.2
+    multiplier = 10
+    n_price = (n_price - n_open + offset) * multiplier
+
+    p_price = sigmoid(n_price);
 
     if (status === "sell") {
         p_price = 1 - p_price;
     }
+    // console.log(p_price)
     return (Math.random() < p_price);
 }

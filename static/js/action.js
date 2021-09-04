@@ -8,7 +8,7 @@ $(".action-button").click(function(){
         var status = "Pending"
         transaction_count += 1;
 
-        if (match_probability(side, price)){
+        if (match_probability(side, price, current_bar['open'])){
             status = "Matched";
             success(side, lots, price);
         }
